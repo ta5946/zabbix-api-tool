@@ -3,7 +3,7 @@ title: Zabbix API
 author: Tjaš Ajdovec
 description: This tool lets the LLM interact with the Zabbix server, which is used for centralized device monitoring.
 git_url: https://github.com/ta5946
-version: 1.0.0
+version: 1.0.1
 """
 
 # TODO Multiple tool calls in one prompt not available in Open WebUI version 5.0.3
@@ -57,7 +57,7 @@ class Tools:
         )
 
     # Host list request
-    async def get_host_list(self, __event_emitter__):
+    async def get_host_list(self, __event_emitter__) -> str:
         """
         This function lets you retrieve the list of hosts monitored by Zabbix.
         Host is a device, such as desktop or virtual machine.
@@ -89,7 +89,7 @@ class Tools:
         return prompt
 
     # Problem list request
-    async def get_problem_list(self, __event_emitter__):
+    async def get_problem_list(self, __event_emitter__) -> str:
         """
         This function lets you retrieve the list of current problems detected by Zabbix.
         Problem is a potential issue, such as high CPU utilization or unavailable SSH service.
@@ -121,7 +121,7 @@ class Tools:
         return prompt
 
     # Item list request
-    async def get_item_list(self, host_name, __event_emitter__):
+    async def get_item_list(self, host_name: str, __event_emitter__) -> str:
         """
         This function lets you retrieve the list of available items for a specified host monitored by Zabbix.
         Item is a monitored metric, such as CPU utilization or SSH response time.
@@ -156,7 +156,7 @@ class Tools:
         return prompt
 
     # Item value request
-    async def get_item_value(self, host_name, item_name, __event_emitter__):
+    async def get_item_value(self, host_name: str, item_name: str, __event_emitter__) -> str:
         """
         This function lets you retrieve the item value for a specific host monitored by Zabbix.
         Item is a monitored metric, such as CPU utilization or SSH response time.
