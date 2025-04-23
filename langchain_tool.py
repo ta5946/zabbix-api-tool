@@ -5,6 +5,7 @@ from datetime import datetime
 from langchain_core.tools import tool
 
 
+# TODO Set max response length
 headers_dict = {
     'Content-Type': 'application/json-rpc'
 }
@@ -42,12 +43,15 @@ def zabbix_host_list() -> str:
 
 
 @tool(parse_docstring=True)
-def zabbix_item_list() -> str:
+def zabbix_item_list(host_name: str) -> str:
     """
     This tool lets you retrieve a list of items monitored by Zabbix.
     You can use it as a starting point for further exploration.
 
     Item is a metric, such as CPU utilization or OS version.
+
+    Args:
+        host_name: Must be a value from the retrieved host list.
 
     Returns:
         str: List of item ids, names and descriptions.
@@ -57,7 +61,7 @@ def zabbix_item_list() -> str:
         'jsonrpc': '2.0',
         'method': 'item.get',
         'params': {
-            'host': 'Server',
+            'host': host_name,
             'output': ['name', 'description'],
         },
         'id': 1,
