@@ -1,7 +1,7 @@
 import os
 import json
 import requests
-import datetime
+from datetime import datetime
 from langchain_core.tools import tool
 
 
@@ -36,7 +36,7 @@ def zabbix_host_list() -> str:
     try:
         response = requests.post(os.getenv('ZABBIX_API_URL'), headers=headers_dict, data=body_json)
         result = response.json()['result']
-        return "Here is the requested list of hosts: " + result
+        return "Here is the requested list of hosts: " + str(result)
     except Exception as error:
         return "Error occurred while retrieving the list of hosts: " + str(error)
 
@@ -68,7 +68,7 @@ def zabbix_item_list() -> str:
     try:
         response = requests.post(os.getenv('ZABBIX_API_URL'), headers=headers_dict, data=body_json)
         result = response.json()['result']
-        return "Here is the requested list of items: " + result
+        return "Here is the requested list of items: " + str(result)
     except Exception as error:
         return "Error occurred while retrieving the list of items: " + str(error)
 
@@ -111,7 +111,7 @@ def zabbix_item_value(host_name: str, item_name: str) -> str:
         response = requests.post(os.getenv('ZABBIX_API_URL'), headers=headers_dict, data=body_json)
         result = response.json()['result']
         if result:
-            return "Here is the requested item value: " + result
+            return "Here is the requested item value: " + str(result)
         else:
             return "The requested item is not monitored on the selected host."
     except Exception as error:
@@ -184,7 +184,7 @@ def zabbix_item_history(host_name: str, item_name: str) -> str:
             item_value['clock'] = datetime.fromtimestamp(int(item_value['clock'])).strftime('%d. %B %Y, %H:%M')
 
         if history_result:
-            return "Here is the requested item history: " + history_result
+            return "Here is the requested item history: " + str(history_result)
         else:
             return "The requested item is not monitored on the selected host."
     except Exception as error:
