@@ -3,9 +3,9 @@
 _This tool lets the LLM interact with the Zabbix server, which is used for centralized device monitoring._
 
 
-## OpenWebUI tool
+## Open WebUI tool
 
-Was developed and tested on **OpenWebui v0.6.x** and Zabbix server v7.0.8
+Was developed and tested on **Open WebUI v0.6.x** and Zabbix server v7.0.8
 
 ### Setup
 
