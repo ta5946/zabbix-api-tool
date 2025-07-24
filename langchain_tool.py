@@ -45,9 +45,12 @@ def zabbix_host_list() -> str:
 @tool(parse_docstring=True)
 def zabbix_item_list(host_name: str) -> str:
     """
-    This tool lets you retrieve a list of items monitored by Zabbix.
+    It is advised to retrieve the list of hosts before using this tool!
+
+    This tool lets you retrieve a list of items monitored by Zabbix for a selected host.
     You can use it as a starting point for further exploration.
 
+    Host is a device, such as desktop or a VM.
     Item is a metric, such as CPU utilization or OS version.
 
     Args:
