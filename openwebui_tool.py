@@ -38,11 +38,13 @@ class Tools:
         self.valves = self.Valves()
         self.headers = {'Content-Type': 'application/json'}
         self.citation = True
+        
+    # Auth headers    
     def _auth_headers(self):
-    headers = self.headers.copy()
-    if self.valves.zabbix_api_token:
-        headers["Authorization"] = f"Bearer {self.valves.zabbix_api_token}"
-    return headers
+        headers = self.headers.copy()
+        if self.valves.zabbix_api_token:
+            headers["Authorization"] = f"Bearer {self.valves.zabbix_api_token}"
+        return headers
 
     # Configuration class
     class Valves(BaseModel):
