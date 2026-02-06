@@ -39,7 +39,7 @@ class Tools:
         self.headers = {'Content-Type': 'application/json'}
         self.citation = True
         
-    # Auth headers    
+    # Auth headers
     def _auth_headers(self):
         headers = self.headers.copy()
         if self.valves.zabbix_api_token:
