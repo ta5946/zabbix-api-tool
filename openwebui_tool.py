@@ -42,8 +42,12 @@ class Tools:
     # Auth headers
     def _auth_headers(self):
         headers = self.headers.copy()
-        if self.valves.zabbix_api_token:
-            headers["Authorization"] = f"Bearer {self.valves.zabbix_api_token}"
+        if not self.valves.zabbix_api_token:
+            raise ValueError(
+                "Zabbix API token is not configured. "
+                "Please set 'zabbix_api_token' in the tool configuration before making API calls."
+            )
+        headers["Authorization"] = f"Bearer {self.valves.zabbix_api_token}"
         return headers
 
     # Configuration class
