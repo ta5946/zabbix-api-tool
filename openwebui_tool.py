@@ -36,8 +36,19 @@ def validate_prompt(prompt, max_length):
 class Tools:
     def __init__(self):
         self.valves = self.Valves()
-        self.headers = {'Content-Type': 'application/json-rpc'}
+        self.headers = {'Content-Type': 'application/json'}
         self.citation = True
+        
+    # Auth headers
+    def _auth_headers(self):
+        headers = self.headers.copy()
+        if not self.valves.zabbix_api_token:
+            raise ValueError(
+                "Zabbix API token is not configured. "
+                "Please set 'zabbix_api_token' in the tool configuration before making API calls."
+            )
+        headers["Authorization"] = f"Bearer {self.valves.zabbix_api_token}"
+        return headers
 
     # Configuration class
     class Valves(BaseModel):
@@ -70,9 +81,8 @@ class Tools:
                 'output': ['host', 'status'],
             },
             'id': 1,
-            'auth': self.valves.zabbix_api_token
         }
-        response, error = api_request(self.valves.zabbix_api_url, self.headers, body)
+        response, error = api_request(self.valves.zabbix_api_url, self._auth_headers(), body)
 
         if error:
             status = 'Error retrieving host list.'
@@ -102,9 +112,8 @@ class Tools:
                 'output': ['name'],
             },
             'id': 1,
-            'auth': self.valves.zabbix_api_token
         }
-        response, error = api_request(self.valves.zabbix_api_url, self.headers, body)
+        response, error = api_request(self.valves.zabbix_api_url, self._auth_headers(), body)
 
         if error:
             status = 'Error retrieving problem list.'
@@ -137,9 +146,8 @@ class Tools:
                 'output': ['name'],
             },
             'id': 1,
-            'auth': self.valves.zabbix_api_token
         }
-        response, error = api_request(self.valves.zabbix_api_url, self.headers, body)
+        response, error = api_request(self.valves.zabbix_api_url, self._auth_headers(), body)
 
         if error:
             status = 'Error retrieving item list.'
@@ -176,9 +184,8 @@ class Tools:
                 'output': ['name', 'lastvalue', 'units'],
             },
             'id': 1,
-            'auth': self.valves.zabbix_api_token
         }
-        response, error = api_request(self.valves.zabbix_api_url, self.headers, body)
+        response, error = api_request(self.valves.zabbix_api_url, self._auth_headers(), body)
 
         if error:
             status = 'Error retrieving item value.'
